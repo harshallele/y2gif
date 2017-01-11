@@ -1,0 +1,21 @@
+{
+  "name": "y2gif",
+  "version": "1.0.0",
+  "description": "A website for making gifs from youtube videos",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "video",
+    "gif",
+    "youtube",
+    "funny",
+    "captions"
+  ],
+  "author": "Harshal Lele",
+  "license": "UNLICENSED",
+  "dependencies": {
+    "express": "^4.14.0"
+  }
+}
