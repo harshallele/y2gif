@@ -5,6 +5,9 @@ var app = express();
 //Add public directory for static files
 app.use(express.static('public'));
 
+app.post('yt-url',function(req,res){
+  console.log('Got the request');
+});
 
 
 //listen on port 3000

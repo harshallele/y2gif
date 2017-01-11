@@ -14,19 +14,30 @@
   <body>
 
     <div class="container main">
-      <div class="header">
+      <div class="row header">
 
         <div class="heading-main">
           Y2GIF
         </div>
         <div class="heading-text">
-          Create gifs from youtube videos
+          Create GIFs from youtube videos
+        </div>
+      </div>
+
+      <div class="row content">
+
+        <div class="input-yt-url col-md-9 col-sm-12">
+          <form action="yt-url" method="post" id = "url-form">
+            <div class="form-group">
+              <input type="url" placeholder = "Youtube URL" class="form-control" name = "yt-url" id="yt-url">
+            </div>
+          </form>
         </div>
 
-        <div class="row content">
-
+        <div class="input-btn-make-gif col-md-3 col-sm-12">
+          <a id = "send-url" class="btn btn-send-url btn-primary">Make GIF</a>
         </div>
-        
+
 
       </div>
 
