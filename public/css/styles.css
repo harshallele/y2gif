@@ -3,6 +3,27 @@ body{
   color:grey;
 }
 
+
+/*Loading spinner*/
+#spinner{
+  border: 4px solid lightgrey;
+  border-top: 4px solid grey;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+
+  margin: auto;
+
+  animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+
+
 /*Header*/
 .header{
   margin-left: 1%;
@@ -54,6 +75,13 @@ hr{
   cursor: pointer;
 }
 
+
+/*Second Section*/
 .sec2{
   display: none;
+  color:grey;
+}
+
+.video-title{
+  font-size: 150%;
 }

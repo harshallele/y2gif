@@ -9,12 +9,23 @@ jQuery(document).ready(function(){
   var sec1 = jQuery('#sec1');
   var sec2 = jQuery('#sec2');
 
-
-
-
-
-
+  //The selected Youtube URL
   var selectedVidUrl = '';
+
+
+
+  //function to load the second screen with the video id, and
+  var loadSecondScreen  = function() {
+
+    var videoId = '';
+    videoId = getYtId(selectedVidUrl);
+    console.log(videoId);
+    if(videoId === undefined | videoId === null |videoId == ''){
+      alert('URL is invalid');
+    }
+  }
+
+
 
 
   //click listener for next button of first section
@@ -28,6 +39,7 @@ jQuery(document).ready(function(){
       sec1.slideUp('fast');
       sec2.slideDown('fast');
 
+      loadSecondScreen();
 
     }
     else {
@@ -41,6 +53,18 @@ jQuery(document).ready(function(){
   });
 
 
+  function getYtId(url){
+    var ID = '';
+    url = url.replace(/(>|<)/gi,'').split(/(vi\/|v=|\/v\/|youtu\.be\/|\/embed\/)/);
+    if(url[2] !== undefined) {
+      ID = url[2].split(/[^0-9a-z_\-]/i);
+      ID = ID[0];
+    }
+    else {
+      ID = url;
+    }
+      return ID;
+}
 
 
 });

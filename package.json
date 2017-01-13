@@ -16,6 +16,7 @@
   "author": "Harshal Lele",
   "license": "UNLICENSED",
   "dependencies": {
-    "express": "^4.14.0"
+    "express": "^4.14.0",
+    "video.js": "^5.15.1"
   }
 }
