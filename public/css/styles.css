@@ -53,3 +53,7 @@ hr{
   color:lightgrey;
   cursor: pointer;
 }
+
+.sec2{
+  display: none;
+}
