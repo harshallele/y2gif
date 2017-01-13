@@ -1,3 +1,53 @@
-.main{
+body{
+  font-family: 'Lato' , sans-serif;
+  color:grey;
+}
+
+
+.header{
+  margin-left: 1%;
+}
+
+.header-main{
+  font-family: 'Josefin Slab' , sans-serif;
+  font-size : 300%;
+  margin: 2% 0%;
+
+}
+
+.header-main a{
+    text-decoration: none;
+    color:grey;
+}
+
+.header-main a:hover{
+    color:lightgrey;
+}
+
+.header-text{
+  font-size: 150%;
+  margin-bottom: 2%;
+}
+
+hr{
+  margin: 5% 0%;
+}
+
+.sec1{
+  font-size: 150%;
   text-align: center;
+}
+
+.sec1 form{
+  padding: 0% 10%;
+}
+
+.sec1 input , .sec1 i{
+  border-radius: 0px;
+  color:grey;
+}
+
+.sec1 i:hover{
+  color:lightgrey;
+  cursor: pointer;
 }
