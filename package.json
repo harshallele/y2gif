@@ -17,6 +17,7 @@
   "license": "UNLICENSED",
   "dependencies": {
     "express": "^4.14.0",
-    "video.js": "^5.15.1"
+    "video.js": "^5.15.1",
+    "videojs-youtube": "^2.3.0"
   }
 }

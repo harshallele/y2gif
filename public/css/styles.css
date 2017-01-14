@@ -55,7 +55,7 @@ hr{
 }
 
 
-/*First section*/
+/*First section(Input for video url)*/
 .sec1{
   font-size: 150%;
   text-align: center;
@@ -76,12 +76,22 @@ hr{
 }
 
 
-/*Second Section*/
+/*Second Section(Customisation options)*/
 .sec2{
   display: none;
   color:grey;
+
+  text-align: center;
+
 }
 
-.video-title{
+.sec2 #main-video{
+  margin: auto;
+  display: none;
+
+}
+
+#video-title{
+  display: none;
   font-size: 150%;
 }
