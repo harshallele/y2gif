@@ -15,6 +15,8 @@ $(document).ready(function(){
   //The selected Youtube URL
   var selectedVidUrl = '';
 
+  var selectedVidDurationSec = 0;
+
   //click listener for next button of first section
   nextBtnSec1.click(function(){
     if(ytUrlText.value) {
@@ -87,10 +89,10 @@ $(document).ready(function(){
 
       //Use the Youtube Data Api to get the video title using the id
       $.ajax({
-      url: "https://www.googleapis.com/youtube/v3/videos?id=" + videoId + "&key=AIzaSyCNEFLZTLyoR25zgHQxPMFCAvQtg3f8WF4&fields=items(snippet(title))&part=snippet",
+      url: "https://www.googleapis.com/youtube/v3/videos?id=" + videoId + "&key=AIzaSyCNEFLZTLyoR25zgHQxPMFCAvQtg3f8WF4&fields=items(snippet(title),contentDetails(duration))&part=snippet,contentDetails",
+      //url: "https://www.googleapis.com/youtube/v3/videos?id=" + videoId + "&key=AIzaSyCNEFLZTLyoR25zgHQxPMFCAvQtg3f8WF4&fields=items(snippet(title))&part=snippet",
       dataType: "jsonp",
       success: function(data){
-
                //Set the video title and the video source
                $('#video-title').text(data.items[0].snippet.title);
                var mainPlayer = videojs('main-video');
@@ -101,6 +103,9 @@ $(document).ready(function(){
 
                //Hide the loading spinner
                $('#spinner').hide();
+
+               setVidDuration(data.items[0].contentDetails.duration);
+
 
              },
       error: function(jqXHR, textStatus, errorThrown) {
@@ -128,6 +133,21 @@ $(document).ready(function(){
 
     }
       return ID;
+}
+
+
+function setVidDuration(durationString){
+  var reptms = /^PT(?:(\d+)H)?(?:(\d+)M)?(?:(\d+)S)?$/;
+  var hours = 0, minutes = 0, seconds = 0, totalseconds;
+
+  if (reptms.test(durationString)) {
+    var matches = reptms.exec(durationString);
+    if (matches[1]) hours = Number(matches[1]);
+    if (matches[2]) minutes = Number(matches[2]);
+    if (matches[3]) seconds = Number(matches[3]);
+    totalseconds = hours * 3600  + minutes * 60 + seconds;
+  }
+  selectedVidDurationSec = totalseconds;
 }
 
 
