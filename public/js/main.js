@@ -15,6 +15,49 @@ $(document).ready(function(){
   //The selected Youtube URL
   var selectedVidUrl = '';
 
+  //click listener for next button of first section
+  nextBtnSec1.click(function(){
+    if(ytUrlText.value) {
+      //destroy the popover
+      $('#yturl').popover('destroy');
+
+      selectedVidUrl = ytUrlText.value;
+      //Load the second section
+      loadSecondScreen();
+
+    }
+    else {
+      //Show a popover asking the user to enter url
+      $('#yturl').popover({
+        title:'Empty URL',
+        content:'Please paste Youtube URL',
+        placement:'top'
+      }).popover('show');
+    }
+  });
+
+  //Click listener for back button of second section
+  prevBtnSec2.click(function () {
+    loadFirstScreen();
+  });
+
+
+  //resize the video size according to the window size
+  $(window).resize(resizeVideoPlayer);
+
+
+  function resizeVideoPlayer(){
+    if(sec2.width() < 992){
+      $('#main-video').width(sec2.width()*0.8);
+      $('#main-video').height((sec2.width()*0.8*9)/16);
+    }
+    else{
+      $('#main-video').width(854);
+      $('#main-video').height(480);
+    }
+  }
+
+
   //empty out the selected URL and display the first section
   var loadFirstScreen = function(){
 
@@ -23,9 +66,6 @@ $(document).ready(function(){
 
     selectedVidUrl = '';
   }
-
-
-
 
   //function to load the second screen with the video id, and
   var loadSecondScreen  = function() {
@@ -55,9 +95,10 @@ $(document).ready(function(){
                $('#video-title').text(data.items[0].snippet.title);
                var mainPlayer = videojs('main-video');
                mainPlayer.src({type: 'video/youtube', src: selectedVidUrl});
+               mainPlayer.muted(true);
                $('#main-video').show();
-               $('#main-video').width(sec2.width());
-               $('#main-video').height((sec2.width()*9)/16);
+               resizeVideoPlayer();
+
                //Hide the loading spinner
                $('#spinner').hide();
 
@@ -72,36 +113,6 @@ $(document).ready(function(){
 
     }
   }
-
-
-
-
-  //click listener for next button of first section
-  nextBtnSec1.click(function(){
-    if(ytUrlText.value) {
-      //destroy the popover
-      $('#yturl').popover('destroy');
-
-      selectedVidUrl = ytUrlText.value;
-      //Load the second section
-      loadSecondScreen();
-
-    }
-    else {
-      //Show a popover asking the user to enter url
-      $('#yturl').popover({
-        title:'Empty URL',
-        content:'Please paste Youtube URL',
-        placement:'top'
-      }).popover('show');
-    }
-  });
-
-  //Click listener for back button of second section
-  prevBtnSec2.click(function () {
-    loadFirstScreen();
-  });
-
 
   //Get the youtube video id from the URL
   function getYtId(url){

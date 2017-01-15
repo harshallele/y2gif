@@ -3,6 +3,13 @@ body{
   color:grey;
 }
 
+/*Buttons*/
+i:hover{
+  color:lightgrey;
+  cursor: pointer;
+}
+
+
 
 /*Loading spinner*/
 #spinner{
@@ -54,6 +61,16 @@ hr{
   margin: 5% 0%;
 }
 
+@media only screen and (min-width:992px) {
+  .header-text{
+    margin-bottom: 1%;
+  }
+  hr{
+    margin: 1% 0%;
+  }
+}
+
+
 
 /*First section(Input for video url)*/
 .sec1{
@@ -70,9 +87,16 @@ hr{
   color:grey;
 }
 
-.sec1 i:hover{
-  color:lightgrey;
-  cursor: pointer;
+@media only screen and (min-width:768px) {
+  .sec1 form{
+    padding: 0% 15%;
+  }
+}
+
+@media only screen and (min-width:992px) {
+  .sec1 form{
+    padding: 0% 20%;
+  }
 }
 
 
@@ -80,8 +104,8 @@ hr{
 .sec2{
   display: none;
   color:grey;
-
   text-align: center;
+  font-size: 150%;
 
 }
 
@@ -93,5 +117,5 @@ hr{
 
 #video-title{
   display: none;
-  font-size: 150%;
+  margin-bottom: 1%;
 }
