@@ -119,3 +119,16 @@ hr{
   display: none;
   margin-bottom: 1%;
 }
+
+.options{
+  margin: 2% 0%;
+  padding: 0% 2%;
+
+  text-align: center;
+}
+
+@media only screen and (min-width:992px) {
+  .options{
+    text-align: left;
+  }
+}

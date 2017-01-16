@@ -105,7 +105,12 @@ $(document).ready(function(){
                $('#spinner').hide();
 
                setVidDuration(data.items[0].contentDetails.duration);
-
+               //Set the slider range according to video length
+               $('#slider-strttime').slider({
+                 min:0,
+                 max:selectedVidDurationSec,
+                 step:parseInt(selectedVidDurationSec/100)
+               });
 
              },
       error: function(jqXHR, textStatus, errorThrown) {
@@ -118,6 +123,73 @@ $(document).ready(function(){
 
     }
   }
+
+  //listener for slide event to update the start time
+  $('#slider-strttime').on('slide',function(slideEvt){
+    if(slideEvt.value > 3600){
+      var hr = parseInt(slideEvt.value/3600);
+      var hrStr = '0' + hr.toString();
+
+      var rem = hr%3600;
+
+      var min = parseInt(rem/60);
+      var minStr = ''
+      if(min < 10){
+        minStr = '0' + min.toString();
+      }
+      else{
+        minStr = min.toString();
+      }
+      var sec = rem%60;
+      var secStr = '';
+      if(sec < 10){
+        secStr = '0' + sec.toString();
+      }
+      else{
+        secStr = sec.toString();
+      }
+
+      var valStr = hrStr + ':' + minStr + ':' + secStr;
+      $('.slider-value-strt').text(valStr);
+    }
+    else{
+      var min = parseInt(slideEvt.value/60);
+      var minStr = ''
+      if(min < 10){
+        minStr = '0' + min.toString();
+      }
+      else{
+        minStr = min.toString();
+      }
+      var sec = (slideEvt.value)%(60);
+      var secStr = '';
+      if(sec < 10){
+        secStr = '0' + sec.toString();
+      }
+      else{
+        secStr = sec.toString();
+      }
+
+      var valStr = minStr + ':' + secStr;
+      $('.slider-value-strt').text(valStr);
+
+    }
+
+
+
+  });
+
+    //listener for slide event to update the duration
+  $('#slider-duration').on('slide',function(slideEvt){
+    var val = slideEvt.value;
+    var valStr = '';
+    if(val < 10){
+      valStr = '0';
+    }
+    valStr+=val.toString();
+    $('.slider-value-duration').text(valStr + ' secs');
+  });
+
 
   //Get the youtube video id from the URL
   function getYtId(url){

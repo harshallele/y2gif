@@ -14,6 +14,8 @@
     <script src="https://use.fontawesome.com/e5c504a7c3.js"></script>
     <!--Video.js CSS -->
     <link rel="stylesheet" href="css/video-js.min.css">
+    <!--Bootstrap-slider CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/9.7.0/css/bootstrap-slider.min.css" />
 
     <link rel="stylesheet" href="css/styles.css">
   </head>
@@ -65,7 +67,38 @@
         >
         </video>
 
-        <div class="customisation options">
+        <!--Options -->
+        <div class="options">
+
+          <!--Options for start time and duration of GIF -->
+          <div class="duration-option row">
+
+            <div class="slider-strttime col-md-9 col-sm-12">
+              <div class="row">
+                Start GIF from
+              </div>
+              <div class="row">
+                <input id="slider-strttime" class="col-md-9" data-slider-id='slider-strttime' data-provide="slider" type="text"/>
+                <div class="slider-value-strt col-md-3">
+                  00:00
+                </div>
+              </div>
+
+            </div>
+
+            <div class="slider-duration col-md-3 col-sm-12">
+              <div class="row">
+                GIF Duration
+              </div>
+              <div class="row">
+                <input id="slider-duration" class="col-md-9" data-slider-id='slider-duration' data-provide="slider" data-slider-min="1" data-slider-max="30" data-slider-step="1" type="text"/>
+                <div class="slider-value-duration col-md-3">
+                  0 secs
+                </div>
+              </div>
+
+            </div>
+          </div>
 
         </div>
 
@@ -85,6 +118,8 @@
     <script src="js/video.min.js" charset="utf-8"></script>
     <!--Youtube plugin for Video.js -->
     <script src="js/Youtube.min.js" charset="utf-8"></script>
+    <!--Bootstrap-slider javascript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/9.7.0/bootstrap-slider.min.js"></script>
 
     <script src="js/main.js" charset="utf-8"></script>
 
