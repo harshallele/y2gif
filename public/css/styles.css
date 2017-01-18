@@ -132,3 +132,8 @@ hr{
     text-align: left;
   }
 }
+
+/*Slider custom style*/
+.slider-selection{
+  background: lightgrey;
+}

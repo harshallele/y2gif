@@ -2,6 +2,13 @@ $(document).ready(function(){
 
   var currentSec = 1;
 
+  var vidStartTimeSecs = 0;
+  var vidDurationSecs = 0;
+  var outputFps = 24;
+  var captionText = '';
+  var reverseVid = false;
+  var greyScaleVid = false;
+
 
   //youtube url text field
   var ytUrlText = $('#yturl')[0];
@@ -50,6 +57,11 @@ $(document).ready(function(){
 
   //empty out the selected URL and display the first section
   var loadFirstScreen = function(){
+
+    //set current time of playing video to the slider value
+    var mainPlayer = videojs('main-video');
+    mainPlayer.pause();
+
 
     sec1.slideDown('fast');
     sec2.slideUp('fast');
@@ -163,9 +175,13 @@ $(document).ready(function(){
 
     }
 
+    //store the value
+    vidStartTimeSecs = slideEvt.value;
+
     //set current time of playing video to the slider value
     var mainPlayer = videojs('main-video');
-    mainPlayer.currentTime(slideEvt.value);
+    mainPlayer.currentTime(vidStartTimeSecs);
+
 
   });
 
@@ -178,6 +194,9 @@ $(document).ready(function(){
     }
     valStr+=val.toString();
     $('.slider-value-duration').text(valStr + ' secs');
+
+    //store the value
+    vidDurationSecs = val;
   });
 
 
