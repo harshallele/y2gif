@@ -137,3 +137,23 @@ hr{
 .slider-selection{
   background: lightgrey;
 }
+
+.duration-option{
+  margin: 5% 0%;
+}
+
+.framerate-caption-option{
+  text-align: center;
+
+}
+
+.input-framerate,.input-caption{
+  margin: 3% 0%;
+}
+
+@media only screen and (min-width:992px) {
+  .input-caption{
+    text-align: right;
+  }
+
+}

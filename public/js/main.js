@@ -199,6 +199,15 @@ $(document).ready(function(){
     vidDurationSecs = val;
   });
 
+  //listener for caption text
+  $("#text-caption").on("change paste keyup", function() {
+    captionText = $(this).val();
+  });
+
+  //listener for framerate
+  $('text-framerate').on('change paste keyup' , function(){
+    outputFps = parseInt($(this).val());
+  });
 
 
   //Listener for enter key

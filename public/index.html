@@ -62,8 +62,9 @@
         <video
         id="main-video"
         autoplay
+        controls
         class="video-js vjs-default-skin"
-        data-setup='{ "techOrder": ["youtube"]}'
+        data-setup='{ "techOrder": ["youtube"] }'
         >
         </video>
 
@@ -91,7 +92,7 @@
                 GIF Duration
               </div>
               <div class="row">
-                <input id="slider-duration" class="col-md-9" data-slider-id='slider-duration' data-provide="slider" data-slider-min="1" data-slider-max="30" data-slider-step="1" type="text"/>
+                <input id="slider-duration" class="col-md-9" data-slider-id='slider-duration' data-provide="slider" data-slider-value="1" data-slider-min="1" data-slider-max="30" data-slider-step="1" type="text"/>
                 <div class="slider-value-duration col-md-3">
                   0 secs
                 </div>
@@ -101,6 +102,13 @@
           </div>
 
           <div class="framerate-caption-option row">
+            <div class="input-framerate col-md-3 col-sm-12">
+              Framerate: <input type="number" name="framerate" id="text-framerate" value="24" min="12" max="30">
+            </div>
+
+            <div class="input-caption col-md-9 col-sm-12">
+              Caption: <input type="text" name="caption" id="text-caption" placeholder="Enter caption...">
+            </div>
 
           </div>
 
