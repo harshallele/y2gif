@@ -49,10 +49,10 @@
 
       </div>
 
-      <!--First section(customise gif) -->
+      <!--Second section(customise gif) -->
       <div class="sec2 text-center" id="sec2">
         <!--Loading animation -->
-        <div id="spinner"></div>
+        <div id="spinner spinner-sec1"></div>
         <!--Button to go to previous section-->
         <i class="fa fa-angle-up fa-3x" id = "sec2-prev"></i>
 
@@ -101,9 +101,10 @@
             </div>
           </div>
 
+          <!--Options for framerate and caption -->
           <div class="framerate-caption-option row">
             <div class="input-framerate col-md-3 col-sm-12">
-              Framerate: <input type="number" name="framerate" id="text-framerate" value="24" min="12" max="30">
+              Framerate: <input type="number" name="framerate" id="text-framerate" value="15" min="12" max="24"> FPS
             </div>
 
             <div class="input-caption col-md-9 col-sm-12">
@@ -112,11 +113,27 @@
 
           </div>
 
+          <!--Options for reverse and  black and white-->
+          <div class="misc-option row">
+            Miscellaneous Options
+            <hr>
+            <label class="checkbox-inline" for="checkbox-reverse"><input id="checkbox-reverse" type="checkbox" value="">Reverse</label>
+            <label class="checkbox-inline" for="checkbox-bw"><input type="checkbox" id="checkbox-bw" value="">Black and White</label>
+          </div>
+
         </div>
 
+        <!--Button to go to next section-->
+        <i class="fa fa-angle-down fa-3x" id = "sec2-next"></i>
 
 
       </div>
+
+      <div class="sec3 text-center" id="sec3">
+        <!--Loading animation -->
+        <div id="spinner spinner-sec2"></div>
+      </div>
+
 
     </div>
 

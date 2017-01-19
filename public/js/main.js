@@ -15,6 +15,9 @@ $(document).ready(function(){
   //next button for first section
   var nextBtnSec1 = $('#sec1-next');
 
+  //next button for second section
+  var nextBtnSec2 = $('#sec2-next');
+
   //Back button of second section
   var prevBtnSec2 = $('#sec2-prev');
 
@@ -31,13 +34,15 @@ $(document).ready(function(){
   nextBtnSec1.click(onNxtBtn1Click);
 
 
-
   //Click listener for back button of second section
   prevBtnSec2.click(function () {
     loadFirstScreen();
     currentSec = 1;
   });
 
+
+  //click listener for next button of second section
+  nextBtnSec2.click()
 
   //resize the video size according to the window size
   $(window).resize(resizeVideoPlayer);
@@ -62,6 +67,13 @@ $(document).ready(function(){
     var mainPlayer = videojs('main-video');
     mainPlayer.pause();
 
+    //reset options
+    vidStartTimeSecs = 0;
+    vidDurationSecs = 0;
+    outputFps = 24;
+    captionText = '';
+    reverseVid = false;
+    greyScaleVid = false;
 
     sec1.slideDown('fast');
     sec2.slideUp('fast');
@@ -83,7 +95,8 @@ $(document).ready(function(){
 
     if(videoId === ''){
       $('#video-title').text('Youtube URL is invalid');
-      $('#spinner').hide();
+      $('#spinner-sec1').hide();
+      $('.options').hide();
     }
     else{
 
@@ -102,7 +115,7 @@ $(document).ready(function(){
                resizeVideoPlayer();
 
                //Hide the loading spinner
-               $('#spinner').hide();
+               $('#spinner-sec1').hide();
 
                setVidDuration(data.items[0].contentDetails.duration);
                //Set the slider range according to video length
@@ -116,7 +129,7 @@ $(document).ready(function(){
       error: function(jqXHR, textStatus, errorThrown) {
               $('#video-title').text(textStatus, + ' | ' + errorThrown);
               //Hide the loading spinner
-              $('#spinner').hide();
+              $('#spinner-sec1').hide();
       }
   });
 
@@ -130,7 +143,7 @@ $(document).ready(function(){
       var hr = parseInt(slideEvt.value/3600);
       var hrStr = '0' + hr.toString();
 
-      var rem = hr%3600;
+      var rem = slideEvt.value%3600;
 
       var min = parseInt(rem/60);
       var minStr = ''
@@ -205,9 +218,19 @@ $(document).ready(function(){
   });
 
   //listener for framerate
-  $('text-framerate').on('change paste keyup' , function(){
+  $('#text-framerate').on('change paste keyup' , function(){
     outputFps = parseInt($(this).val());
   });
+
+  //listener for checkboxes
+  $('#checkbox-reverse').change(function(){
+    reverseVid = this.checked;
+  });
+
+  $('#checkbox-bw').change(function(){
+    greyScaleVid = this.checked;
+  });
+
 
 
   //Listener for enter key
@@ -248,6 +271,11 @@ $(document).ready(function(){
       }).popover('show');
     }
 
+
+  }
+
+
+  function onNxtBtn2Click(){
 
   }
 
