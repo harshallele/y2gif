@@ -21,9 +21,10 @@ $(document).ready(function(){
   //Back button of second section
   var prevBtnSec2 = $('#sec2-prev');
 
-  //Section 1
+  //Sections
   var sec1 = $('#sec1');
   var sec2 = $('#sec2');
+  var sec3 = $('#sec3');
 
   //The selected Youtube URL
   var selectedVidUrl = '';
@@ -42,7 +43,7 @@ $(document).ready(function(){
 
 
   //click listener for next button of second section
-  nextBtnSec2.click()
+  nextBtnSec2.click(onNxtBtn2Click);
 
   //resize the video size according to the window size
   $(window).resize(resizeVideoPlayer);
@@ -63,7 +64,6 @@ $(document).ready(function(){
   //empty out the selected URL and display the first section
   var loadFirstScreen = function(){
 
-    //set current time of playing video to the slider value
     var mainPlayer = videojs('main-video');
     mainPlayer.pause();
 
@@ -95,10 +95,14 @@ $(document).ready(function(){
 
     if(videoId === ''){
       $('#video-title').text('Youtube URL is invalid');
-      $('#spinner-sec1').hide();
+      $('#spinner-sec2').hide();
       $('.options').hide();
+      nextBtnSec2.hide();
     }
     else{
+      //show the options and next button if it was hidden
+      $('.options').show();
+      nextBtnSec2.show();
 
       //Use the Youtube Data Api to get the video title using the id
       $.ajax({
@@ -115,7 +119,7 @@ $(document).ready(function(){
                resizeVideoPlayer();
 
                //Hide the loading spinner
-               $('#spinner-sec1').hide();
+               $('#spinner-sec2').hide();
 
                setVidDuration(data.items[0].contentDetails.duration);
                //Set the slider range according to video length
@@ -127,15 +131,26 @@ $(document).ready(function(){
 
              },
       error: function(jqXHR, textStatus, errorThrown) {
-              $('#video-title').text(textStatus, + ' | ' + errorThrown);
+              $('#video-title').text('Error while loading video');
               //Hide the loading spinner
-              $('#spinner-sec1').hide();
+              $('#spinner-sec2').hide();
       }
   });
 
 
     }
   }
+
+  var loadThirdScreen = function(){
+    sec1.hide();
+    sec2.slideUp('fast');
+    sec3.slideDown('fast');
+
+
+
+  }
+
+
 
   //listener for slide event to update the start time
   $('#slider-strttime').on('slide',function(slideEvt){
@@ -241,7 +256,9 @@ $(document).ready(function(){
       if(currentSec === 1){
         onNxtBtn1Click();
       }
-
+      else if (currentSec === 2) {
+        onNxtBtn2Click();
+      }
     }
 });
 
@@ -276,7 +293,8 @@ $(document).ready(function(){
 
 
   function onNxtBtn2Click(){
-
+    loadThirdScreen();
+    currentSec = 3;
   }
 
 

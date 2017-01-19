@@ -157,3 +157,12 @@ hr{
   }
 
 }
+
+/*Third Section(Download link)*/
+.sec3{
+  display: none;
+  color:grey;
+  text-align: center;
+  font-size: 150%;
+  
+}
