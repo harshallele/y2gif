@@ -2,12 +2,17 @@ $(document).ready(function(){
 
   var currentSec = 1;
 
-  var vidStartTimeSecs = 0;
-  var vidDurationSecs = 0;
+  var gifStartTimeSecs = 0;
+  var gifDurationSecs = 0;
   var outputFps = 24;
   var captionText = '';
   var reverseVid = false;
   var greyScaleVid = false;
+
+  //The selected Youtube URL
+  var selectedVidUrl = '';
+
+  var selectedVidDurationSec = 0;
 
 
   //youtube url text field
@@ -26,10 +31,7 @@ $(document).ready(function(){
   var sec2 = $('#sec2');
   var sec3 = $('#sec3');
 
-  //The selected Youtube URL
-  var selectedVidUrl = '';
 
-  var selectedVidDurationSec = 0;
 
   //click listener for next button of first section
   nextBtnSec1.click(onNxtBtn1Click);
@@ -68,8 +70,8 @@ $(document).ready(function(){
     mainPlayer.pause();
 
     //reset options
-    vidStartTimeSecs = 0;
-    vidDurationSecs = 0;
+    gifStartTimeSecs = 0;
+    gifDurationSecs = 0;
     outputFps = 24;
     captionText = '';
     reverseVid = false;
@@ -204,11 +206,11 @@ $(document).ready(function(){
     }
 
     //store the value
-    vidStartTimeSecs = slideEvt.value;
+    gifStartTimeSecs = slideEvt.value;
 
     //set current time of playing video to the slider value
     var mainPlayer = videojs('main-video');
-    mainPlayer.currentTime(vidStartTimeSecs);
+    mainPlayer.currentTime(gifStartTimeSecs);
 
 
   });
@@ -224,7 +226,7 @@ $(document).ready(function(){
     $('.slider-value-duration').text(valStr + ' secs');
 
     //store the value
-    vidDurationSecs = val;
+    gifDurationSecs = val;
   });
 
   //listener for caption text
@@ -294,8 +296,13 @@ $(document).ready(function(){
 
   function onNxtBtn2Click(){
     loadThirdScreen();
+
+    sendPostRequest();
+
     currentSec = 3;
   }
+
+
 
 
 
@@ -329,6 +336,50 @@ function setVidDuration(durationString){
   }
   selectedVidDurationSec = totalseconds;
 }
+
+
+  //Send an HTTP POST request with the link and options
+  function sendPostRequest(){
+
+    /*
+    var gifStartTimeSecs = 0;
+    var gifDurationSecs = 0;
+    var outputFps = 24;
+    var captionText = '';
+    var reverseVid = false;
+    var greyScaleVid = false;
+    */
+
+
+    var http = new XMLHttpRequest();
+    var url = '/vid';
+
+    var params = '';
+
+    var encodedURL = encodeURIComponent(selectedVidUrl);
+    params+='v='+encodedURL+'&';
+    params+='s='+gifStartTimeSecs+'&';
+    params+='d='+gifDurationSecs+'&';
+    params+='f='+outputFps+'&';
+    params+='t='+captionText+'&';
+    params+='r='+reverseVid+'&';
+    params+='g='+greyScaleVid;
+
+    http.open('POST',url,true);
+
+    //Send the proper header information along with the request
+    http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+
+    http.onreadystatechange = function() {//Call a function when the state changes.
+      if(http.readyState == 4 && http.status == 200) {
+          alert(http.responseText);
+      }
+    }
+    http.send(params);
+
+
+  }
+
 
 
 });

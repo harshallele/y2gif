@@ -5,8 +5,13 @@ var app = express();
 //Add public directory for static files
 app.use(express.static('public'));
 
-app.post('yt-url',function(req,res){
-  console.log('Got the request');
+app.post('/vid',function(req,res){
+  if(req.method === 'POST'){
+    req.on('data',function(data){
+      console.log(data.toString());
+
+    });
+  }
 });
 
 
