@@ -3,7 +3,8 @@
 
 //customisation options
 var options = {
-  decodedUrl:'',
+  id:0,
+  decodedId:'',
   startTimeSecs:0,
   durationSecs:0,
   outputFps:15,
@@ -12,12 +13,12 @@ var options = {
   greyScaleGif:false
 }
 
-exports.processVideo = function(params){
+exports.processVideo = function(params,id){
   var paramsArr = params.split('&');
 
-  //Fill options object
-  var encodedURL = paramsArr[0].split('=')[1];
-  options.decodedUrl = decodeURIComponent(encodedURL);
+  //Create options object
+  var encodedId = paramsArr[0].split('=')[1];
+  options.decodedId = decodeURIComponent(encodedId);
 
   options.startTimeSecs = paramsArr[1].split('=')[1];
 
@@ -31,6 +32,9 @@ exports.processVideo = function(params){
 
   options.greyScaleGif = paramsArr[6].split('=')[1];
 
+  options.id = id;
 
+
+  console.log(options);
 
 }

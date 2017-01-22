@@ -12,6 +12,9 @@ $(document).ready(function(){
   //The selected Youtube URL
   var selectedVidUrl = '';
 
+  //video id
+  var videoId = '';
+
   var selectedVidDurationSec = 0;
 
 
@@ -89,7 +92,6 @@ $(document).ready(function(){
     sec1.slideUp('fast');
     sec2.slideDown('fast');
 
-    var videoId = '';
     videoId = getYtId(selectedVidUrl);
 
     $('#main-video').hide();
@@ -356,8 +358,8 @@ function setVidDuration(durationString){
 
     var params = '';
 
-    var encodedURL = encodeURIComponent(selectedVidUrl);
-    params+='v='+encodedURL+'&';
+    var encodedId = encodeURIComponent(videoId);
+    params+='v='+encodedId+'&';
     params+='s='+gifStartTimeSecs+'&';
     params+='d='+gifDurationSecs+'&';
     params+='f='+outputFps+'&';
