@@ -18,6 +18,7 @@
   "dependencies": {
     "express": "^4.14.0",
     "video.js": "^5.15.1",
-    "videojs-youtube": "^2.3.0"
+    "videojs-youtube": "^2.3.0",
+    "youtube-dl": "^1.11.1"
   }
 }

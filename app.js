@@ -11,7 +11,7 @@ app.post('/vid',function(req,res){
   if(req.method === 'POST'){
     req.on('data',function(data){
       var params = data.toString();
-      gifmaker.processVideo(params,getRandomInt(1000,10000));
+      gifmaker.processVideo(params,getRandomInt(10000,100000));
 
     });
   }

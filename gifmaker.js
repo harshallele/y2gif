@@ -1,6 +1,12 @@
 
 /*Module that processes options to download video, add options and returns a download link*/
 
+var fs = require('fs');
+var ytdl = require('youtube-dl');
+var exec = require('child_process').exec;
+
+const dataPath = './data/';
+
 //customisation options
 var options = {
   id:0,
@@ -34,7 +40,34 @@ exports.processVideo = function(params,id){
 
   options.id = id;
 
+  convertVideo();
 
-  console.log(options);
+}
+
+var convertVideo = function () {
+  //createJobDir(options.id);
+
+  downloadVideo(options.decodedId);
+}
+
+
+var createJobDir = function(id){
+  var dir = dataPath+id.toString();
+
+  if(!fs.existsSync(dir)){
+    fs.mkdirSync(dir);
+  }
+
+}
+
+var downloadVideo = function(videoId){
+    var url = 'https://www.youtube.com/watch?v='+videoId;
+
+
+    exec('youtube-dl ' + url + ' --list-formats | grep medium',function(error,stdout,stderr){
+      console.log(stdout);
+    });
+
+
 
 }
