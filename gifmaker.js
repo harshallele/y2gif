@@ -93,7 +93,7 @@ var downloadVid = function(vidInfo,url,dir){
   video.pipe(fs.createWriteStream(dir+'vid.'+ext));
 
   video.on('end',function() {
-    console.log('Download Over');
+    console.log('Download Over ' + options.id);
   })
 
 }
