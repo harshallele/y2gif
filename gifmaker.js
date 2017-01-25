@@ -44,13 +44,16 @@ exports.processVideo = function(params,id){
 
 }
 
+//download, cut and convert the video to gif
 var convertVideo = function () {
-  //createJobDir(options.id);
+  createJobDir(options.id);
 
-  downloadVideo(options.decodedId);
+  var dir = dataPath+options.id.toString()+'/';
+
+  downloadAndConvertVid(options.decodedId,dir);
 }
 
-
+//create a directory that will contain all files
 var createJobDir = function(id){
   var dir = dataPath+id.toString();
 
@@ -60,14 +63,37 @@ var createJobDir = function(id){
 
 }
 
-var downloadVideo = function(videoId){
+//download and convert the video
+var downloadAndConvertVid = function(videoId,dir){
+    //video url
     var url = 'https://www.youtube.com/watch?v='+videoId;
 
+    getVideoInfo(url,dir);
+}
 
-    exec('youtube-dl ' + url + ' --list-formats | grep medium',function(error,stdout,stderr){
-      console.log(stdout);
-    });
+var getVideoInfo = function(url,dir){
+  //execute a shell command that uses youtube-dl to get available formats
+  exec('youtube-dl ' + url + ' --list-formats | grep \'video only\' | grep 360 | head -n1 | awk \'{print $1,$2}\' ' , function(error,stdout,stderr){
+
+    if(error) throw error;
+    downloadVid(stdout,url,dir);
+  });
+}
+
+//download the video
+var downloadVid = function(vidInfo,url,dir){
+  //format
+  var format = vidInfo.split(' ')[0];
+  //file extension
+  var ext = vidInfo.split(' ')[1];
 
 
+  var video = ytdl(url,['--format='+format],{ cwd: dir });
+
+  video.pipe(fs.createWriteStream(dir+'vid.'+ext));
+
+  video.on('end',function() {
+    console.log('Download Over');
+  })
 
 }
