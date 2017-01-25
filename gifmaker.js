@@ -94,6 +94,12 @@ var downloadVid = function(vidInfo,url,dir){
 
   video.on('end',function() {
     console.log('Download Over ' + options.id);
-  })
+  });
 
 }
+
+/*
+var makeGif(vidInfo,dir){
+
+}
+*/
