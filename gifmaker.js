@@ -73,7 +73,7 @@ var downloadAndConvertVid = function(videoId,dir){
 
 var getVideoInfo = function(url,dir){
   //execute a shell command that uses youtube-dl to get available formats
-  exec('youtube-dl ' + url + ' --list-formats | grep \'video only\' | grep 360 | head -n1 | awk \'{print $1,$2}\' ' , function(error,stdout,stderr){
+  exec('youtube-dl ' + url + ' --list-formats | grep \'video only\' | grep 360 | head -n1 | awk \'{print $1,$2}\' ',{maxBuffer: 1024 * 500} , function(error,stdout,stderr){
 
     if(error) throw error;
     downloadVid(stdout,url,dir);
@@ -88,7 +88,7 @@ var downloadVid = function(vidInfo,url,dir){
   var ext = vidInfo.split(' ')[1];
 
 
-  var video = ytdl(url,['--format='+format],{ cwd: dir });
+  var video = ytdl(url,['--format='+format]);
 
   video.pipe(fs.createWriteStream(dir+'vid.'+ext));
 
