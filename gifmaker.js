@@ -76,7 +76,10 @@ var getVideoInfo = function(url,dir){
   exec('youtube-dl ' + url + ' --list-formats | grep \'video only\' | grep 360 | head -n1 | awk \'{print $1,$2}\' ',{maxBuffer: 1024 * 500} , function(error,stdout,stderr){
 
     if(error) throw error;
-    downloadVid(stdout,url,dir);
+
+    //download the video
+    //slice stdout to remove the new line at the end
+    downloadVid(stdout.slice(0,-1),url,dir);
   });
 }
 
@@ -93,13 +96,39 @@ var downloadVid = function(vidInfo,url,dir){
   video.pipe(fs.createWriteStream(dir+'vid.'+ext));
 
   video.on('end',function() {
-    console.log('Download Over ' + options.id);
+    cutVideo(vidInfo,dir);
   });
 
 }
 
-/*
-var makeGif(vidInfo,dir){
+var cutVideo = function(vidInfo,dir) {
+  //format
+  var format = vidInfo.split(' ')[0];
+  //file extension
+  var ext = vidInfo.split(' ')[1];
 
+  var ytFile = dir+'vid.'+ext;
+
+  var command = 'ffmpeg -i ' + ytFile + ' -ss ' + options.startTimeSecs + ' -t ' + options.durationSecs + ' -vf fps=' + options.outputFps + ' ' + dir +'o.' + ext;
+
+  exec(command,{maxBuffer:1024*500},function(error,stdout,stderr){
+
+    if(error) throw error;
+
+  });
 }
-*/
+
+
+
+var makeGif = function(vidInfo,dir){
+  //format
+  var format = vidInfo.split(' ')[0];
+  //file extension
+  var ext = vidInfo.split(' ')[1];
+
+  var ytFile = dir+'vid.'+ext;
+
+  var gifFileName = 'gif.gif';
+
+  var ffmpegCommand = 'ffmpeg -i ' + ytFile + ' -ss ' + options.startTimeSecs + ' -t ' + options.durationSecs + ' -pix_fmt rgb8  -vf fps=' + options.outputFps + ' ' + gifFileName;
+}

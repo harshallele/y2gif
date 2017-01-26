@@ -4,7 +4,7 @@ $(document).ready(function(){
 
   var gifStartTimeSecs = 0;
   var gifDurationSecs = 0;
-  var outputFps = 24;
+  var outputFps = 15;
   var captionText = '';
   var reverseVid = false;
   var greyScaleVid = false;
