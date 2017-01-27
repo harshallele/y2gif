@@ -95,40 +95,121 @@ var downloadVid = function(vidInfo,url,dir){
 
   video.pipe(fs.createWriteStream(dir+'vid.'+ext));
 
+  //After the video has finished,cut the video and change it's framerate
   video.on('end',function() {
     cutVideo(vidInfo,dir);
   });
 
 }
 
+//cuts the video to desired length and changes framerate
 var cutVideo = function(vidInfo,dir) {
-  //format
-  var format = vidInfo.split(' ')[0];
+
   //file extension
   var ext = vidInfo.split(' ')[1];
-
+  //name of full length file
   var ytFile = dir+'vid.'+ext;
 
-  var command = 'ffmpeg -i ' + ytFile + ' -ss ' + options.startTimeSecs + ' -t ' + options.durationSecs + ' -vf fps=' + options.outputFps + ' ' + dir +'o.' + ext;
+  var command = 'ffmpeg -i ' + ytFile + ' -ss ' + options.startTimeSecs + ' -t ' + options.durationSecs + ' -vf fps=' + options.outputFps + ' ' + dir +'c.' + ext;
 
   exec(command,{maxBuffer:1024*500},function(error,stdout,stderr){
 
     if(error) throw error;
 
+    addCaptionsAndEffects(vidInfo,dir);
+
   });
 }
 
+//Adds captions and effects
+var addCaptionsAndEffects = function (vidInfo,dir) {
+
+  //file extension
+  var ext = vidInfo.split(' ')[1];
 
 
+  //ffmpeg command to execute
+  var command = 'ffmpeg -i ' + dir + 'c.'+ext + ' ';
+
+  var effectsAdded = false;
+
+  //Add captions
+  if(options.captionText != ''){
+
+    command += ' -vf "drawtext= fontfile=/usr/share/fonts/truetype/ubuntu-font-family/Ubuntu-M.ttf: text=' + options.captionText + ': fontcolor=white: fontsize=24: x=(w-text_w)/2: y=(h-text_h)*0.9 ';
+
+    effectsAdded = true;
+
+  }
+
+  //Reverse the video
+  if(options.reverseGif == true){
+
+    if(!effectsAdded){
+      command += ' -vf "';
+    }
+
+    else{
+      command += ' , ';
+    }
+
+    command += ' reverse ';
+    effectsAdded = true;
+  }
+
+  //Make the video black and white
+  if(options.greyScaleGif == true){
+
+    if(!effectsAdded){
+      command += ' -vf "';
+    }
+    else{
+      command += ' , ';
+    }
+
+    command += ' hue=s=0 ';
+    effectsAdded = true;
+
+  }
+
+  //End the quotes (if any have started)
+  if(effectsAdded){
+    command += ' " ';
+  }
+
+  //Output file
+  command+= dir + 't.' + ext;
+
+  exec(command,{maxBuffer: 1024*500},function (error,stdout,stderr) {
+
+    if(error) throw error;
+
+    makeGif(vidInfo,dir);
+
+  });
+
+}
+
+//Convert video to gif
 var makeGif = function(vidInfo,dir){
   //format
   var format = vidInfo.split(' ')[0];
   //file extension
   var ext = vidInfo.split(' ')[1];
 
-  var ytFile = dir+'vid.'+ext;
+  //video file name
+  var vidFile = dir+'t.'+ext;
+  //output gif file name
+  var gifFileName = dir + 'g.gif';
 
-  var gifFileName = 'gif.gif';
+  var ffmpegCommand = 'ffmpeg -i ' + vidFile + ' -pix_fmt rgb8 ' + ' ' + gifFileName;
 
-  var ffmpegCommand = 'ffmpeg -i ' + ytFile + ' -ss ' + options.startTimeSecs + ' -t ' + options.durationSecs + ' -pix_fmt rgb8  -vf fps=' + options.outputFps + ' ' + gifFileName;
+  exec(ffmpegCommand,{maxBuffer: 1024*500},function (error,stdout,stderr) {
+
+    if(error) throw error;
+
+    console.log('Command Executed');
+
+  });
+
 }
