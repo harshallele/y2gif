@@ -162,6 +162,18 @@ hr{
 
 }
 
+#sec1-next , #sec2-prev , #sec2-next{
+  margin-bottom: 5%;
+  color:grey;
+  border-color: grey;
+}
+
+#sec1-next:hover , #sec2-prev:hover , #sec2-next:hover{
+  border-color: lightgrey;
+  color:lightgrey;
+  background: transparent;
+}
+
 /*Third Section(Download link)*/
 .sec3{
   display: none;

@@ -7,6 +7,8 @@ var exec = require('child_process').exec;
 
 const dataPath = './data/';
 
+var gifFileLink = '';
+
 //customisation options
 var options = {
   id:0,
@@ -42,6 +44,7 @@ exports.processVideo = function(params,id){
 
   convertVideo();
 
+  return gifFileLink;
 }
 
 //download, cut and convert the video to gif
@@ -180,6 +183,8 @@ var addCaptionsAndEffects = function (vidInfo,dir) {
   //Output file
   command+= dir + 't.' + ext;
 
+  console.log(command);
+
   exec(command,{maxBuffer: 1024*500},function (error,stdout,stderr) {
 
     if(error) throw error;
@@ -199,8 +204,9 @@ var makeGif = function(vidInfo,dir){
 
   //video file name
   var vidFile = dir+'t.'+ext;
-  //output gif file name
+  //output video
   var gifFileName = dir + 'g.gif';
+
 
   var ffmpegCommand = 'ffmpeg -i ' + vidFile + ' -pix_fmt rgb8 ' + ' ' + gifFileName;
 
@@ -208,8 +214,29 @@ var makeGif = function(vidInfo,dir){
 
     if(error) throw error;
 
-    console.log('Command Executed');
+    deleteRawContent(vidInfo,dir);
 
+    gifFileLink = gifFileName;
+
+  });
+
+}
+
+//delete raw content
+var deleteRawContent = function (vidInfo,dir) {
+  //file extension
+  var ext = vidInfo.split(' ')[1];
+
+  fs.unlink(dir + 'vid.' + ext , function (err) {
+    if(err) throw err;
+  });
+
+  fs.unlink(dir + 'c.' + ext , function (err) {
+    if(err) throw err;
+  });
+
+  fs.unlink(dir + 't.' + ext , function (err) {
+    if(err) throw err;
   });
 
 }
