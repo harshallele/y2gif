@@ -152,7 +152,8 @@ hr{
 }
 
 .misc-option{
-  text-align: center;
+  text-align: left;
+  margin-left: 40%;
 }
 
 @media only screen and (min-width:992px) {
@@ -160,6 +161,10 @@ hr{
     text-align: right;
   }
 
+  .misc-option{
+    text-align: center;
+    margin-left: 0%;
+  }
 }
 
 #sec1-next , #sec2-prev , #sec2-next{

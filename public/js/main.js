@@ -1,3 +1,18 @@
+
+//youtube player
+var player;
+
+//options
+var gifStartTimeSecs = 0;
+var gifDurationSecs = 0;
+var outputFps = 15;
+var captionText = '';
+var reverseVid = false;
+var greyScaleVid = false;
+
+//video id
+var videoId = '';
+
 $(document).ready(function(){
 
   var currentSec = 1;
@@ -12,8 +27,7 @@ $(document).ready(function(){
   //The selected Youtube URL
   var selectedVidUrl = '';
 
-  //video id
-  var videoId = '';
+
 
   var selectedVidDurationSec = 0;
 
@@ -35,6 +49,12 @@ $(document).ready(function(){
   var sec3 = $('#sec3');
 
 
+  var tag = document.createElement('script');
+  tag.src = "https://www.youtube.com/iframe_api";
+
+  var playerDiv = document.getElementById('player');
+
+  playerDiv.parentNode.insertBefore(tag,playerDiv);
 
   //click listener for next button of first section
   nextBtnSec1.click(onNxtBtn1Click);
@@ -56,12 +76,10 @@ $(document).ready(function(){
 
   function resizeVideoPlayer(){
     if(sec2.width() < 992){
-      $('#main-video').width(sec2.width()*0.8);
-      $('#main-video').height((sec2.width()*0.8*9)/16);
+      player.setSize( sec2.width()*0.8 , (sec2.width()*0.8*9)/16 );
     }
     else{
-      $('#main-video').width(854);
-      $('#main-video').height(480);
+      player.setSize( 854 , 480 );
     }
   }
 
@@ -69,13 +87,12 @@ $(document).ready(function(){
   //empty out the selected URL and display the first section
   var loadFirstScreen = function(){
 
-    var mainPlayer = videojs('main-video');
-    mainPlayer.pause();
+    player.stopVideo();
 
     //reset options
     gifStartTimeSecs = 0;
     gifDurationSecs = 0;
-    outputFps = 24;
+    outputFps = 15;
     captionText = '';
     reverseVid = false;
     greyScaleVid = false;
@@ -94,7 +111,6 @@ $(document).ready(function(){
 
     videoId = getYtId(selectedVidUrl);
 
-    $('#main-video').hide();
     $('#video-title').show();
 
     if(videoId === ''){
@@ -102,6 +118,7 @@ $(document).ready(function(){
       $('#spinner-sec2').hide();
       $('.options').hide();
       nextBtnSec2.hide();
+      player.getIframe().display = 'none';
     }
     else{
       //show the options and next button if it was hidden
@@ -116,12 +133,10 @@ $(document).ready(function(){
       success: function(data){
                //Set the video title and the video source
                $('#video-title').text(data.items[0].snippet.title);
-               var mainPlayer = videojs('main-video');
-               mainPlayer.src({type: 'video/youtube', src: selectedVidUrl});
-               mainPlayer.muted(true);
-               $('#main-video').show();
+
                resizeVideoPlayer();
 
+               player.getIframe().display = 'block';
                //Hide the loading spinner
                $('#spinner-sec2').hide();
 
@@ -133,11 +148,15 @@ $(document).ready(function(){
                  step:parseInt(selectedVidDurationSec/100)
                });
 
+              player.loadVideoById(videoId);
              },
       error: function(jqXHR, textStatus, errorThrown) {
               $('#video-title').text('Error while loading video');
               //Hide the loading spinner
               $('#spinner-sec2').hide();
+
+              player.getIframe().display = 'none';
+
       }
   });
 
@@ -149,10 +168,7 @@ $(document).ready(function(){
     sec1.hide();
     sec2.slideUp('fast');
     sec3.slideDown('fast');
-
-
-
-  }
+}
 
 
 
@@ -211,9 +227,7 @@ $(document).ready(function(){
     gifStartTimeSecs = slideEvt.value;
 
     //set current time of playing video to the slider value
-    var mainPlayer = videojs('main-video');
-    mainPlayer.currentTime(gifStartTimeSecs);
-
+    player.loadVideoById(videoId,gifStartTimeSecs,gifStartTimeSecs + gifDurationSecs);
 
   });
 
@@ -229,6 +243,8 @@ $(document).ready(function(){
 
     //store the value
     gifDurationSecs = val;
+
+    player.loadVideoById(videoId,gifStartTimeSecs,gifStartTimeSecs + gifDurationSecs);
   });
 
   //listener for caption text
@@ -382,6 +398,26 @@ function setVidDuration(durationString){
 
   }
 
-
-
 });
+
+
+function onYouTubeIframeAPIReady() {
+  player = new YT.Player('player', {
+    events: {
+      'onReady': onPlayerReady,
+      'onStateChange': onPlayerStateChange
+      }
+  });
+}
+
+
+function onPlayerReady(event){
+  event.target.playVideo();
+  event.target.mute();
+}
+
+function onPlayerStateChange(event) {
+    if (event.data == YT.PlayerState.PAUSED && player.getCurrentTime() == gifStartTimeSecs + gifDurationSecs) {
+      player.loadVideoById(videoId,gifStartTimeSecs,gifStartTimeSecs + gifDurationSecs);
+    }
+}
