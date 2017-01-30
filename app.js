@@ -4,7 +4,9 @@ var gifmaker = require('./gifmaker.js');
 var app = express();
 
 //Add public directory for static files
-app.use(express.static('public'));
+app.use(express.static('public',{
+  dotfiles : 'deny'
+}));
 
 //Listen for POST request with video url and output options
 app.post('/vid',function(req,res){
@@ -12,7 +14,11 @@ app.post('/vid',function(req,res){
     req.on('data',function(data){
       var params = data.toString();
       var link = gifmaker.processVideo(params,getRandomInt(10000,100000));
-      
+      if(link){
+        res.writeHead(200,{'Content-type':'text/plain'});
+        res.write(link);
+        res.end();
+      }
 
     });
   }

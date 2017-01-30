@@ -4,7 +4,7 @@ var player;
 
 //options
 var gifStartTimeSecs = 0;
-var gifDurationSecs = 0;
+var gifDurationSecs = 1;
 var outputFps = 15;
 var captionText = '';
 var reverseVid = false;
@@ -17,12 +17,6 @@ $(document).ready(function(){
 
   var currentSec = 1;
 
-  var gifStartTimeSecs = 0;
-  var gifDurationSecs = 0;
-  var outputFps = 15;
-  var captionText = '';
-  var reverseVid = false;
-  var greyScaleVid = false;
 
   //The selected Youtube URL
   var selectedVidUrl = '';
@@ -91,7 +85,7 @@ $(document).ready(function(){
 
     //reset options
     gifStartTimeSecs = 0;
-    gifDurationSecs = 0;
+    gifDurationSecs = 1;
     outputFps = 15;
     captionText = '';
     reverseVid = false;
@@ -173,12 +167,15 @@ $(document).ready(function(){
 
 
   //listener for slide event to update the start time
-  $('#slider-strttime').on('slide',function(slideEvt){
-    if(slideEvt.value > 3600){
-      var hr = parseInt(slideEvt.value/3600);
+  $('#slider-strttime').on('change',function(slideEvt){
+
+    var newVal = slideEvt.value.newValue;
+
+    if(newVal > 3600){
+      var hr = parseInt(newVal/3600);
       var hrStr = '0' + hr.toString();
 
-      var rem = slideEvt.value%3600;
+      var rem = newVal%3600;
 
       var min = parseInt(rem/60);
       var minStr = ''
@@ -201,7 +198,7 @@ $(document).ready(function(){
       $('.slider-value-strt').text(valStr);
     }
     else{
-      var min = parseInt(slideEvt.value/60);
+      var min = parseInt(newVal/60);
       var minStr = ''
       if(min < 10){
         minStr = '0' + min.toString();
@@ -209,7 +206,7 @@ $(document).ready(function(){
       else{
         minStr = min.toString();
       }
-      var sec = (slideEvt.value)%(60);
+      var sec = (newVal)%(60);
       var secStr = '';
       if(sec < 10){
         secStr = '0' + sec.toString();
@@ -224,16 +221,15 @@ $(document).ready(function(){
     }
 
     //store the value
-    gifStartTimeSecs = slideEvt.value;
+    gifStartTimeSecs = newVal;
 
     //set current time of playing video to the slider value
-    player.loadVideoById(videoId,gifStartTimeSecs,gifStartTimeSecs + gifDurationSecs);
-
+    playVideoContent();
   });
 
     //listener for slide event to update the duration
-  $('#slider-duration').on('slide',function(slideEvt){
-    var val = slideEvt.value;
+  $('#slider-duration').on('change',function(slideEvt){
+    var val = slideEvt.value.newValue;
     var valStr = '';
     if(val < 10){
       valStr = '0';
@@ -244,8 +240,10 @@ $(document).ready(function(){
     //store the value
     gifDurationSecs = val;
 
-    player.loadVideoById(videoId,gifStartTimeSecs,gifStartTimeSecs + gifDurationSecs);
+    playVideoContent();
   });
+
+
 
   //listener for caption text
   $("#text-caption").on("change paste keyup", function() {
@@ -265,6 +263,10 @@ $(document).ready(function(){
   $('#checkbox-bw').change(function(){
     greyScaleVid = this.checked;
   });
+
+
+  $('#btn-replay').click(playVideoContent);
+
 
 
 
@@ -313,11 +315,12 @@ $(document).ready(function(){
 
 
   function onNxtBtn2Click(){
-    loadThirdScreen();
 
-    sendPostRequest();
+      loadThirdScreen();
 
-    currentSec = 3;
+      sendPostRequest();
+
+      currentSec = 3;
   }
 
 
@@ -358,16 +361,6 @@ function setVidDuration(durationString){
 
   //Send an HTTP POST request with the link and options
   function sendPostRequest(){
-
-    /*
-    var gifStartTimeSecs = 0;
-    var gifDurationSecs = 0;
-    var outputFps = 24;
-    var captionText = '';
-    var reverseVid = false;
-    var greyScaleVid = false;
-    */
-
 
     var http = new XMLHttpRequest();
     var url = '/vid';
@@ -418,6 +411,16 @@ function onPlayerReady(event){
 
 function onPlayerStateChange(event) {
     if (event.data == YT.PlayerState.PAUSED && player.getCurrentTime() == gifStartTimeSecs + gifDurationSecs) {
-      player.loadVideoById(videoId,gifStartTimeSecs,gifStartTimeSecs + gifDurationSecs);
+      playVideoContent();
     }
+}
+
+
+function playVideoContent(){
+  player.loadVideoById({
+    'videoId' : videoId,
+    'startSeconds' : gifStartTimeSecs,
+    'endSeconds' : gifStartTimeSecs + gifDurationSecs
+  });
+
 }

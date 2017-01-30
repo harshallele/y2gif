@@ -2,3 +2,7 @@
 data/*
 
 !data/.gitkeep
+
+public/gif/*
+
+!public/gif/.gitkeep

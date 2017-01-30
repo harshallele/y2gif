@@ -3,14 +3,6 @@ body{
   color:grey;
 }
 
-/*Buttons*/
-i:hover{
-  color:lightgrey;
-  cursor: pointer;
-}
-
-
-
 /*Loading spinner*/
 #spinner{
   border: 4px solid lightgrey;
@@ -131,6 +123,8 @@ hr{
   .options{
     text-align: left;
   }
+
+
 }
 
 /*Slider custom style*/
@@ -167,16 +161,21 @@ hr{
   }
 }
 
-#sec1-next , #sec2-prev , #sec2-next{
+#sec1-next , #sec2-prev , #sec2-next , #btn-replay{
   margin-bottom: 5%;
   color:grey;
   border-color: grey;
 }
 
-#sec1-next:hover , #sec2-prev:hover , #sec2-next:hover{
+#sec1-next:hover , #sec2-prev:hover , #sec2-next:hover , #btn-replay:hover{
   border-color: lightgrey;
   color:lightgrey;
   background: transparent;
+}
+
+
+#btn-replay{
+  margin-top: 2%;
 }
 
 /*Third Section(Download link)*/
@@ -206,4 +205,8 @@ hr{
   color:lightgrey;
   border: 1px solid lightgrey;
   background: transparent;
+}
+
+#text-caption {
+  width:80%;
 }

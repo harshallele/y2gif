@@ -42,6 +42,7 @@ exports.processVideo = function(params,id){
 
   options.id = id;
 
+
   convertVideo();
 
   return gifFileLink;
@@ -146,7 +147,7 @@ var addCaptionsAndEffects = function (vidInfo,dir) {
   }
 
   //Reverse the video
-  if(options.reverseGif == true){
+  if(options.reverseGif == 'true'){
 
     if(!effectsAdded){
       command += ' -vf "';
@@ -161,7 +162,7 @@ var addCaptionsAndEffects = function (vidInfo,dir) {
   }
 
   //Make the video black and white
-  if(options.greyScaleGif == true){
+  if(options.greyScaleGif == 'true'){
 
     if(!effectsAdded){
       command += ' -vf "';
@@ -205,7 +206,7 @@ var makeGif = function(vidInfo,dir){
   //video file name
   var vidFile = dir+'t.'+ext;
   //output video
-  var gifFileName = dir + 'g.gif';
+  var gifFileName = './public/gif/' + options.id + '.gif';
 
 
   var ffmpegCommand = 'ffmpeg -i ' + vidFile + ' -pix_fmt rgb8 ' + ' ' + gifFileName;
