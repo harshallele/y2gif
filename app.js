@@ -36,5 +36,5 @@ function getRandomInt(min, max) {
 
 //listen on port 3000
 var server = app.listen(3000);
-server.timeout = 1000 * 60;
+server.timeout = 1000 * 120;
 console.log('Listening on port 3000');

@@ -217,7 +217,7 @@ var makeGif = function(vidInfo,dir){
 
     deleteRawContent(vidInfo,dir);
 
-    gifFileLink = gifFileName;
+    gifFileLink = 'gif/' + options.id + '.gif';
 
   });
 
