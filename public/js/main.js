@@ -10,6 +10,10 @@ var captionText = '';
 var reverseVid = false;
 var greyScaleVid = false;
 
+//indicates whether conversion is complete
+var complete = false;
+var reqTime = 0;
+
 //video id
 var videoId = '';
 
@@ -252,7 +256,16 @@ $(document).ready(function(){
 
   //listener for framerate
   $('#text-framerate').on('change paste keyup' , function(){
-    outputFps = parseInt($(this).val());
+    var input = parseInt($(this).val());
+    if(input < 10){
+      input = 10;
+      $(this).val(input);
+    }
+    else if (input > 20) {
+      input = 20;
+      $(this).val(input);
+    }
+    outputFps = input;
   });
 
   //listener for checkboxes
@@ -383,7 +396,9 @@ function setVidDuration(durationString){
 
     http.onreadystatechange = function() {//Call a function when the state changes.
       if(http.readyState == 4 && http.status == 200) {
-        showDownloadButton(http.responseText);
+        var id = http.responseText;
+        reqTime = new Date().getTime()/1000;
+        checkJobCompletion(id);
       }
     }
     http.send(params);
@@ -391,11 +406,63 @@ function setVidDuration(durationString){
 
   }
 
-  function showDownloadButton(dwLink){
+  //send a POST request to check if the conversion is done
+  function checkJobCompletion(id){
+
+    var xhr = new XMLHttpRequest();
+    var params = 'id=' + id.toString();
+    var url = '/check';
+
+    xhr.open('POST',url,true);
+
+    xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+
+    xhr.onreadystatechange = function() {//Call a function when the state changes.
+      if(xhr.readyState == 4 && xhr.status == 200) {
+        var response = xhr.responseText;
+
+        if(response == 'true'){
+          complete = true;
+          showDownloadButton(id);
+          reqTime = 0;
+        }
+
+        //If the conversion hasn't completed,send another one after 2 seconds
+        //If it's been 2 minutes since the conversion request was sent, show an error message
+        if(!complete){
+          if(new Date().getTime()/1000 - reqTime < 120){
+            setTimeout(function(){
+              checkJobCompletion(id);
+            },2000);
+          }
+          else {
+            showConversionError();
+          }
+
+        }
+
+      }
+
+
+    }
+
+    xhr.send(params);
+  }
+
+  //Show download button
+  function showDownloadButton(id){
+    var dwLink = 'gif/' + id + '.gif';
     $('#loading-text').hide();
     $('#spinner').hide();
     $('#btn-dw').attr('href' , dwLink);
+    $('#btn-dw').attr('download' , id+'.gif');
     $('#btn-dw').show();
+  }
+
+  //Show error message
+  function showConversionError(){
+    $('#loading-text').text('There was an error while converting the video');
+    $('#spinner').hide();
 
   }
 
@@ -423,7 +490,6 @@ function onPlayerStateChange(event) {
       playVideoContent();
     }
 }
-
 
 function playVideoContent(){
   player.loadVideoById({

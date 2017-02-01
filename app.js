@@ -1,5 +1,6 @@
 var express = require('express');
 var gifmaker = require('./gifmaker.js');
+var gifchecker = require('./gifchecker.js');
 
 var app = express();
 
@@ -13,13 +14,24 @@ app.post('/vid',function(req,res){
   if(req.method === 'POST'){
     req.on('data',function(data){
       var params = data.toString();
-      var link = gifmaker.processVideo(params,getRandomInt(10000,100000));
-      if(link){
-        res.writeHead(200,{'Content-type':'text/plain'});
-        res.write(link);
-        res.end();
-      }
+      var id = getRandomInt(10000,100000);
+      res.writeHead(200,{'Content-type':'text/plain'});
+      res.write(id.toString());
+      res.end();
+      gifmaker.processVideo(params,id);
+    });
+  }
+});
 
+//Listen for POST request with video id to check if a conversion has been done
+app.post('/check',function(req,res){
+  if(req.method === 'POST'){
+    req.on('data',function (data) {
+      var params = data.toString();
+      var check = gifchecker.checkJob(params);
+      res.writeHead(200,{'Content-type':'text/plain'});
+      res.write(check.toString());
+      res.end();
     });
   }
 });
@@ -36,5 +48,4 @@ function getRandomInt(min, max) {
 
 //listen on port 3000
 var server = app.listen(3000);
-server.timeout = 1000 * 120;
 console.log('Listening on port 3000');

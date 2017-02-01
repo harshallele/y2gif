@@ -184,8 +184,6 @@ var addCaptionsAndEffects = function (vidInfo,dir) {
   //Output file
   command+= dir + 't.' + ext;
 
-  console.log(command);
-
   exec(command,{maxBuffer: 1024*500},function (error,stdout,stderr) {
 
     if(error) throw error;
@@ -239,5 +237,9 @@ var deleteRawContent = function (vidInfo,dir) {
   fs.unlink(dir + 't.' + ext , function (err) {
     if(err) throw err;
   });
+
+  //create an empty '.complete' file that will be used by gifchecker to check if the conversion is complete
+  fs.closeSync(fs.openSync(dir + '.complete','w'));
+
 
 }
