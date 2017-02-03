@@ -72,7 +72,7 @@
                 Start GIF from
               </div>
               <div class="row">
-                <input id="slider-strttime" class="col-md-9" data-slider-id='slider-strttime' data-provide="slider" type="text" />
+                <input id="slider-strttime" class="col-md-9" data-slider-id='slider-strttime' data-provide="slider" data-slider-min="0" data-slider-max="60" data-slider-value="0" data-slider-step="1" type="text" />
                 <div class="slider-value-strt col-md-3 color-darkred">
                   00:00
                 </div>
@@ -110,8 +110,8 @@
           <!--Options for reverse and  black and white-->
           <div class="misc-option row">
 
-            <label class="col-md-6 col-sm-12" for="checkbox-reverse" class="color-darkred color-hover-lightred"><input id="checkbox-reverse" type="checkbox" value="">Reverse</label>
-            <label class="col-md-6 col-sm-12" for="checkbox-bw" class="color-darkred color-hover-lightred"><input type="checkbox" id="checkbox-bw" value="">Black and White</label>
+            <label class="col-md-6 col-sm-12 color-darkred color-hover-lightred" for="checkbox-reverse" ><input id="checkbox-reverse" type="checkbox" value="">Reverse</label>
+            <label class="col-md-6 col-sm-12 color-darkred color-hover-lightred" for="checkbox-bw" ><input type="checkbox" id="checkbox-bw" value="">Black and White</label>
           </div>
 
         </div>
@@ -125,7 +125,7 @@
 
       <div class="sec3 text-center" id="sec3">
 
-        <div class="loading-text" id="loading-text" class="color-darkred">
+        <div class="loading-text color-darkred" id="loading-text">
           Processing...This may take a few minutes
         </div>
 

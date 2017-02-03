@@ -292,7 +292,9 @@ $(document).ready(function(){
         onNxtBtn1Click();
       }
       else if (currentSec === 2) {
-        onNxtBtn2Click();
+        if(videoId != ''){
+          onNxtBtn2Click();
+        }
       }
     }
 });

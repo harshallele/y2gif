@@ -5,8 +5,8 @@ body{
 
 /*Loading spinner*/
 #spinner{
-  border: 4px solid lightgrey;
-  border-top: 4px solid grey;
+  border: 4px solid #EF5350;
+  border-top: 4px solid #B71C1C;
   border-radius: 50%;
   width: 40px;
   height: 40px;
@@ -146,11 +146,11 @@ body{
 }
 
 /*Slider custom style*/
-#slider-strttime .slider-selection{
+.slider-selection{
   background: #EF5350;
 }
 
-#slider-strttime .slider-handle{
+.slider-handle{
   background: #B71C1C;
 }
 
