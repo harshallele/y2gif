@@ -22,9 +22,9 @@
       <!--Heading-->
       <div class="header row main">
         <div class="header-main">
-          <a href="">Y2GIF</a>
+          <a href="" class="color-darkred color-hover-lightred">Y2GIF</a>
         </div>
-        <div class="header-text">
+        <div class="header-text color-red">
           Make GIFs from Youtube Videos
         </div>
       </div>
@@ -34,8 +34,8 @@
       <!--First section(input youtube url) -->
       <div class="sec1" id="sec1">
         <div class="form-group">
-          <form >
-            <label for="yt-url">Paste Youtube Video URL</label>
+          <form>
+            <label for="yt-url" class="color-darkred">Paste Youtube Video URL</label>
             <input type="url" name="yt-url" id = "yturl" class="form-control input-lg" placeholder="Youtube URL" autofocus>
           </form>
         </div>
@@ -52,7 +52,7 @@
         <!--Button to go to previous section-->
         <a class="btn btn-default btn-lg" id = "sec2-prev">Back</a>
 
-        <div id="video-title"></div>
+        <div id="video-title color-darkred"></div>
 
         <div id="player"></div>
 
@@ -68,12 +68,12 @@
           <div class="duration-option row">
 
             <div class="slider-strttime col-md-8 col-sm-12">
-              <div class="row">
+              <div class="row color-darkred">
                 Start GIF from
               </div>
               <div class="row">
                 <input id="slider-strttime" class="col-md-9" data-slider-id='slider-strttime' data-provide="slider" type="text" />
-                <div class="slider-value-strt col-md-3">
+                <div class="slider-value-strt col-md-3 color-darkred">
                   00:00
                 </div>
               </div>
@@ -81,12 +81,12 @@
             </div>
 
             <div class="slider-duration col-md-4 col-sm-12">
-              <div class="row">
+              <div class="row color-darkred">
                 GIF Duration
               </div>
               <div class="row">
                 <input id="slider-duration" class="col-md-9" data-slider-id='slider-duration' data-provide="slider" data-slider-value="1" data-slider-min="1" data-slider-max="15" data-slider-step="1" type="text"/>
-                <div class="slider-value-duration col-md-3">
+                <div class="slider-value-duration col-md-3 color-darkred">
                   01 secs
                 </div>
               </div>
@@ -96,11 +96,11 @@
 
           <!--Options for framerate and caption -->
           <div class="framerate-caption-option row">
-            <div class="input-framerate col-md-3 col-sm-12">
-              Framerate: <input type="number" name="framerate" id="text-framerate" value="15" min="10" max="20"> FPS
+            <div class="input-framerate col-md-3 col-sm-12 color-darkred">
+              Framerate: <input type="number" name="framerate" id="text-framerate" value="15" min="10" max="20" > FPS
             </div>
 
-            <div class="input-caption col-md-9 col-sm-12">
+            <div class="input-caption col-md-9 col-sm-12 color-darkred">
               Caption: <input type="text" name="caption" id="text-caption" placeholder="Enter caption...">
             </div>
 
@@ -110,8 +110,8 @@
           <!--Options for reverse and  black and white-->
           <div class="misc-option row">
 
-            <label class="col-md-6 col-sm-12" for="checkbox-reverse"><input id="checkbox-reverse" type="checkbox" value="">Reverse</label>
-            <label class="col-md-6 col-sm-12" for="checkbox-bw"><input type="checkbox" id="checkbox-bw" value="">Black and White</label>
+            <label class="col-md-6 col-sm-12" for="checkbox-reverse" class="color-darkred color-hover-lightred"><input id="checkbox-reverse" type="checkbox" value="">Reverse</label>
+            <label class="col-md-6 col-sm-12" for="checkbox-bw" class="color-darkred color-hover-lightred"><input type="checkbox" id="checkbox-bw" value="">Black and White</label>
           </div>
 
         </div>
@@ -125,7 +125,7 @@
 
       <div class="sec3 text-center" id="sec3">
 
-        <div class="loading-text" id="loading-text">
+        <div class="loading-text" id="loading-text" class="color-darkred">
           Processing...This may take a few minutes
         </div>
 

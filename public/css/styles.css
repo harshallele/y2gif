@@ -25,19 +25,21 @@ body{
 
 /*Header*/
 .header{
-  margin-left: 1%;
+
+  background-color: #212121;
 }
 
 .header-main{
   font-family: 'Josefin Slab' , sans-serif;
   font-size : 300%;
   margin: 2% 0%;
+  margin-left: 1%;
 
 }
 
 .header-main a{
     text-decoration: none;
-    color:grey;
+    color:white;
 }
 
 .header-main a:hover{
@@ -47,11 +49,10 @@ body{
 .header-text{
   font-size: 150%;
   margin-bottom: 2%;
+  margin-left: 1%;
+  color: white;
 }
 
-hr{
-  margin: 5% 0%;
-}
 
 @media only screen and (min-width:992px) {
   .header-text{
@@ -91,6 +92,23 @@ hr{
   }
 }
 
+#yturl , #text-framerate , #text-caption{
+  border: 5px solid #B71C1C;
+  color: #B71C1C;
+}
+
+#yturl::-webkit-input-placeholder , #text-framerate::-webkit-input-placeholder , #text-caption::-webkit-input-placeholder{
+  color: #B71C1C;
+}
+
+#yturl:focus , #text-caption:focus , #text-framerate:focus{
+  border: 5px solid #EF5350;
+  color: #EF5350;
+}
+
+#yturl:focus::-webkit-input-placeholder , #text-caption:focus::-webkit-input-placeholder , #text-framerate:focus::-webkit-input-placeholder{
+  color:#EF5350;
+}
 
 /*Second Section(Customisation options)*/
 .sec2{
@@ -128,9 +146,14 @@ hr{
 }
 
 /*Slider custom style*/
-.slider-selection{
-  background: lightgrey;
+#slider-strttime .slider-selection{
+  background: #EF5350;
 }
+
+#slider-strttime .slider-handle{
+  background: #B71C1C;
+}
+
 
 .duration-option{
   margin: 5% 0%;
@@ -163,14 +186,16 @@ hr{
 
 #sec1-next , #sec2-prev , #sec2-next , #btn-replay{
   margin-bottom: 5%;
-  color:grey;
-  border-color: grey;
+  color:#B71C1C;
+  border-color: #B71C1C;
+  border-radius: 0px;
 }
 
 #sec1-next:hover , #sec2-prev:hover , #sec2-next:hover , #btn-replay:hover{
-  border-color: lightgrey;
-  color:lightgrey;
-  background: transparent;
+  border-color: #EF5350;
+  color:#EF5350;
+  background:transparent;
+  border-radius: 0px;
 }
 
 
@@ -188,25 +213,40 @@ hr{
 
 .btn-dw{
   margin: 2% 0%;
-  color:grey;
+  color:#B71C1C;
   background: transparent;
-  border: 1px solid grey;
-
+  border: 2px solid #B71C1C;
+  border-radius: 0px;
   display: none;
 }
 
 .btn-dw:hover{
-  color:lightgrey;
-  border: 1px solid lightgrey;
+  color:#EF5350;
+  border: 2px solid #EF5350;
   background: transparent;
+  border-radius: 0px;
 }
 
-.btn-dw:active{
-  color:lightgrey;
-  border: 1px solid lightgrey;
-  background: transparent;
-}
+
 
 #text-caption {
   width:80%;
+}
+
+
+/*Theming styles*/
+.color-red{
+  color:#F44336 !important;
+}
+
+.color-lightred{
+  color:#EF5350 !important;
+}
+
+.color-hover-lightred:hover{
+  color:#EF5350 !important;
+}
+
+.color-darkred{
+  color:#B71C1C !important;
 }
